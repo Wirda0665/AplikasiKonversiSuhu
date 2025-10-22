@@ -28,11 +28,20 @@ public class FormKonversi extends javax.swing.JFrame {
 
 private void konversiSuhu() {
     try {
-        double input = Double.parseDouble(txtSuhu.getText());
+        String teksInput = txtSuhu.getText().trim();
+        
+        // Cegah error jika kosong atau hanya "-" atau hanya "."
+        if (teksInput.isEmpty() || teksInput.equals("-") || teksInput.equals(".") || teksInput.equals("-.")) {
+            lblHasil.setText(""); // kosongkan hasil
+            return; // keluar tanpa error
+        }
+
+        double input = Double.parseDouble(teksInput);
         String dari = cmbDari.getSelectedItem().toString();
         String ke = cmbKe.getSelectedItem().toString();
         double hasil = 0;
 
+        // LOGIKA KONVERSI
         if (dari.equals("Celsius")) {
             switch (ke) {
                 case "Fahrenheit": hasil = (input * 9/5) + 32; break;
@@ -66,9 +75,10 @@ private void konversiSuhu() {
         lblHasil.setText("Hasil: " + String.format("%.2f", hasil) + " " + ke);
 
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Masukkan angka yang valid!", "Error", JOptionPane.ERROR_MESSAGE);
+        lblHasil.setText("Input tidak valid");
     }
 }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -294,10 +304,31 @@ private void konversiSuhu() {
 
     private void txtSuhuKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSuhuKeyTyped
         // TODO add your handling code here:
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c) && c != '.' && c != KeyEvent.VK_BACK_SPACE) {
-        evt.consume();
-        }
+    char c = evt.getKeyChar();
+
+    // Izinkan backspace
+    if (c == KeyEvent.VK_BACK_SPACE) {
+        return;
+    }
+
+    // Izinkan angka
+    if (Character.isDigit(c)) {
+        return;
+    }
+
+    // Izinkan titik (.) hanya satu kali
+    if (c == '.' && !txtSuhu.getText().contains(".")) {
+        return;
+    }
+
+    // Izinkan tanda minus (-) hanya di posisi pertama
+    if (c == '-' && txtSuhu.getCaretPosition() == 0 && !txtSuhu.getText().contains("-")) {
+        return;
+    }
+
+    // Jika bukan karakter yang diizinkan, batalkan input
+    evt.consume();
+
     }//GEN-LAST:event_txtSuhuKeyTyped
 
     private void txtSuhuKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSuhuKeyReleased
