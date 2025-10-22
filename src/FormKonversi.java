@@ -137,9 +137,6 @@ private void konversiSuhu() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtSuhuFocusGained(evt);
             }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtSuhuFocusLost(evt);
-            }
         });
         txtSuhu.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -357,10 +354,6 @@ private void konversiSuhu() {
         konversiSuhu();
         }
     }//GEN-LAST:event_cmbKeItemStateChanged
-
-    private void txtSuhuFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSuhuFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSuhuFocusLost
 
     private void txtSuhuFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSuhuFocusGained
         // TODO add your handling code here:
